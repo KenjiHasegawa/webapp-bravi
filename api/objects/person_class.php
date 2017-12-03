@@ -42,7 +42,6 @@ class Person{
         $results = mysqli_query($this->connection, $query);
 
         return $results;
-
     }
 
     public function get_all(){
@@ -81,8 +80,6 @@ class Person{
             $query = substr(trim($query), 0, -1);
         }
         $query .= ')';
-
-
         $query .=  " VALUES (";
 
         foreach($vars as $key => $item){
@@ -97,9 +94,6 @@ class Person{
         $query .= ')';
 
         substr_replace($query, ')', strrpos($query, ','),1);
-
-        echo $query;
-        echo '<br>';
 
         $result = mysqli_query($this->connection,$query);
         return $result;
@@ -130,14 +124,21 @@ class Person{
         }
         $query .= ' WHERE id='.$this->id;
 
-        echo $query;
-        echo '<br>';
-
         $result = mysqli_query($this->connection,$query);
         return $result;
     }
 
     public function delete(){
+        if (is_null($this->id)){
+            return false;
+        }
+
+        $query = "DELETE FROM ".$this->table;
+
+        $query .= ' WHERE id='.$this->id;
+
+        $result = mysqli_query($this->connection,$query);
+        return $result;
 
     }
 }
