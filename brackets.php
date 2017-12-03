@@ -9,7 +9,7 @@ require_once('layout_header.php');
     </div>
     <form method="post" action="">
         <div class="col-md-10">
-            <textarea class="form-control" rows="20" id="input" name="input">[[[(({{}}))]]]</textarea>
+            <textarea class="form-control" rows="20" id="input" name="input">[()]</textarea>
         </div>
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary">Check it!</button>

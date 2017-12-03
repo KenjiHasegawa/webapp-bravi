@@ -17,8 +17,6 @@
 
 <body>
 
-
-
 <!-- container -->
 <div class="container section-max-width">
     <nav class="navbar navbar-inverse">
