@@ -109,14 +109,14 @@ class Person{
         if (is_null($this->id)){
             return false;
         }
-
+        $vars['first_name'] = $this->first_name;
         $vars['last_name'] =  $this->last_name;
         $vars['email'] =  $this->email;
         $vars['phone'] =  $this->phone;
         $vars['whatsapp'] =  $this->whatsapp;
 
 
-        $query = "UPDATE ".$this->table . " SET";
+        $query = "UPDATE ".$this->table . " SET ";
 
         foreach($vars as $key => $item){
             // (first_name, last_name, email, phone, whatsapp)
@@ -128,7 +128,7 @@ class Person{
         if(substr($query, -1, 1) === ','){
             $query = substr(trim($query), 0, -1);
         }
-        $query .= 'WHERE id='.$this->id;
+        $query .= ' WHERE id='.$this->id;
 
         echo $query;
         echo '<br>';
