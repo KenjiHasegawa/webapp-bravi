@@ -35,31 +35,16 @@ function balance($string_input){
 }
 
 // check all input_strings if they are balanced
-function check_brackets($inputs){
-    $results = array();
-
-    foreach ($inputs as $string_input){
-        if (balance($string_input)){
-            array_push($results, [$string_input, "OK"]);
-        }
-        else{
-            array_push($results, [$string_input,"NOT OK"]);
-        }
+function check_brackets($string_input){
+    if (balance($string_input)){
+        echo '<script>
+                document.getElementById("result").innerHTML = \'<div class="alert alert-success"> <strong>Congratulations!</strong> This piece of text is correctly balanced! </div>\';
+              </script>';
     }
-
-    return $results;
+    else{
+        echo '<script>
+                document.getElementById("result").innerHTML = \'<div class="alert alert-danger"> <strong>Boooo!</strong> This piece of text is not correctly balanced!</div>\';
+              </script>';
+    }
 }
 
-$input = [
-    "{}[]()",
-    "{[}]",
-    "{[}]",
-    "[{()()}({[]})]({}[({})])((((((()[])){}))[]{{{({({({{{{{{}}}}}})})})}}}))[][][]",
-    "{}[]()",
-    "([)]",
-    "([oi]e)"
-];
-
-echo "<pre>";
-print_r(check_brackets($input));
-echo "</pre>";
