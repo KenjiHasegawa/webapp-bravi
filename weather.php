@@ -25,7 +25,7 @@ if(isset($_GET) and isset($_GET['input'])){
 
 
     <div class='page-header'>
-        <h1>Weather Forecast</h1>
+        <h1>Current Weather</h1>
     </div>
 
     <form name="weather" method="get" action="">

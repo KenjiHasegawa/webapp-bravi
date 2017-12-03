@@ -22,12 +22,12 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/BraviProject/index.php">Bravi Interview</a>
+                <a class="navbar-brand" href="/webapp-bravi/index.php">Bravi Interview</a>
             </div>
             <ul class="nav navbar-nav navbar-center">
                 <li class=""><a href="/webapp-bravi/brackets.php">Balanced Brackets</a></li>
                 <li class=""><a href="/webapp-bravi/rest_api.php">REST API</a></li>
-                <li class=""><a href="/webapp-bravi/weather.php">Weather</a></li>
+                <li class=""><a href="/webapp-bravi/weather.php">Current Weather</a></li>
             </ul>
         </div>
     </nav>
