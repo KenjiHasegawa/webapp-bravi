@@ -41,10 +41,10 @@ class Database{
         $sql = "CREATE TABLE IF NOT EXISTS people(
                 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 first_name VARCHAR(30) NOT NULL,
-                last_name VARCHAR(30) NOT NULL,
-                email VARCHAR(70) NOT NULL UNIQUE,
-                phone VARCHAR(70) NOT NULL UNIQUE,
-                whatsapp VARCHAR(70) NOT NULL UNIQUE
+                last_name VARCHAR(30),
+                email VARCHAR(70) UNIQUE,
+                phone VARCHAR(70) UNIQUE,
+                whatsapp VARCHAR(70) UNIQUE
         )";
 
         // if the query fails
