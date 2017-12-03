@@ -22,6 +22,7 @@ class Person{
 
     public function get_person(){
 
+        $vars['id'] = $this->id;
         $vars['first_name']  = $this->first_name;
         $vars['last_name'] =  $this->last_name;
         $vars['email'] =  $this->email;
@@ -34,7 +35,7 @@ class Person{
 
 
         foreach($vars as $key => $value){
-            if (!is_null($value)){
+            if (!is_null($value) or $value != ""){
                 $query .= $key."=".$value." and ";
             }
         }
@@ -44,8 +45,7 @@ class Person{
 
 
         $query .=" ORDER BY first_name ASC";
-        echo $query;
-        echo '<br>';
+
         // execute query
         $results = mysqli_query($this->connection, $query);
         $rows = mysqli_num_rows($results);
@@ -54,7 +54,6 @@ class Person{
             if ($rows > 0) {
 
                 $people_array = array();
-                $people_array["rows"] = array();
 
                 while ($row = mysqli_fetch_array($results)) {
                     $people_item = array(
@@ -66,25 +65,23 @@ class Person{
                         "whatsapp" => $row['whatsapp']
                     );
 
-                    array_push($people_array["rows"], $people_item);
+                    $people_array[] = $people_item;
                 }
 
-                $json = json_encode($people_array, JSON_PRETTY_PRINT);
+                echo json_encode($people_array, JSON_PRETTY_PRINT );
             } else {
-                $json = json_encode(
+                echo json_encode(
                     array("message" => "No contacts found."),
                     JSON_PRETTY_PRINT
                 );
             }
         }
         else{
-            $json = json_encode(
+            echo json_encode(
                 array("message" => "No contacts found."),
                 JSON_PRETTY_PRINT
             );
         }
-
-        return $json;
     }
 
     public function get_all(){
@@ -128,7 +125,7 @@ class Person{
         foreach($vars as $key => $item){
             // (".$this->first_name.", ".$this->last_name.", ".$this->email.", ".$this->phone.", ".$this->whatsapp)
             if (!is_null($item)) {
-                $query .= $this->$key . ",";
+                $query .= "'".$this->$key . "',";
             }
         }
         if(substr($query, -1, 1) === ','){
@@ -158,7 +155,7 @@ class Person{
         foreach($vars as $key => $item){
             // (first_name, last_name, email, phone, whatsapp)
             if (!is_null($item)){
-                $query .= $key."=".$this->$key.",";
+                $query .= $key."='". (string) $this->$key."',";
             }
         }
 
@@ -166,6 +163,7 @@ class Person{
             $query = substr(trim($query), 0, -1);
         }
         $query .= ' WHERE id='.$this->id;
+
 
         $result = mysqli_query($this->connection,$query);
         return $result;

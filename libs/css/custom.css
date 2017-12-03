@@ -8,3 +8,7 @@
 .section-max-width {
     max-width: 1024px;
 }
+
+.api-submit-buttons{
+    float: right;
+}

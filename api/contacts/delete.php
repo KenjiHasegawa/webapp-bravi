@@ -10,7 +10,7 @@ $db = $database->connect();
 $person = new Person($db);
 
 // set person object values
-$person->id = isset($_GET['id'])? $_GET['id'] : null;
+$person->id = isset($_POST['id'])? $_POST['id'] : null;
 
 // try to create the contact
 if($person->delete()){
