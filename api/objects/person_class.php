@@ -20,28 +20,71 @@ class Person{
         $this->connection = $db;
     }
 
-    public function get_person($get_array){
+    public function get_person(){
+
+        $vars['first_name']  = $this->first_name;
+        $vars['last_name'] =  $this->last_name;
+        $vars['email'] =  $this->email;
+        $vars['phone'] =  $this->phone;
+        $vars['whatsapp'] =  $this->whatsapp;
+
         $query = "SELECT id, first_name, last_name, email, phone, whatsapp 
                   FROM ".$this->table."
                   WHERE ";
 
-        end($get_array);
-        $last_key = key($get_array);
-        foreach($get_array as $key => $value){
-            if (!($key === $last_key)){
-                $query .= $key ."=". $value . " and ";
-            }
-            else {
-                $query .= $key ."=". $value;
+
+        foreach($vars as $key => $value){
+            if (!is_null($value)){
+                $query .= $key."=".$value." and ";
             }
         }
+        substr_replace($query, ' ', strrpos($query, ','),1);
+        $query = substr(trim($query), 0, -4);
+
+
 
         $query .=" ORDER BY first_name ASC";
-
+        echo $query;
+        echo '<br>';
         // execute query
         $results = mysqli_query($this->connection, $query);
+        $rows = mysqli_num_rows($results);
 
-        return $results;
+        if ($results) {
+            if ($rows > 0) {
+
+                $people_array = array();
+                $people_array["rows"] = array();
+
+                while ($row = mysqli_fetch_array($results)) {
+                    $people_item = array(
+                        "id" => $row['id'],
+                        "first_name" => $row['first_name'],
+                        "last_name" => $row['last_name'],
+                        "email" => $row['email'],
+                        "phone" => $row['phone'],
+                        "whatsapp" => $row['whatsapp']
+                    );
+
+                    array_push($people_array["rows"], $people_item);
+                }
+
+                $json = json_encode($people_array, JSON_PRETTY_PRINT);
+            } else {
+                $json = json_encode(
+                    array("message" => "No contacts found."),
+                    JSON_PRETTY_PRINT
+                );
+            }
+        }
+        else{
+            $json = json_encode(
+                array("message" => "No contacts found."),
+                JSON_PRETTY_PRINT
+            );
+        }
+
+        return $json;
     }
 
     public function get_all(){

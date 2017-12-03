@@ -9,45 +9,13 @@ $database = new Database();
 $db = $database->connect();
 $person = new Person($db);
 
+$data = $_GET;
 // query to return one person
-$query = $person->get_person($_GET);
+$person->first_name = isset($data['first_name']) ? $data['first_name'] : null;
+$person->last_name = isset($data['last_name']) ? $data['last_name'] : null;
+$person->email = isset($data['email']) ? $data['email'] : null;
+$person->phone = isset($data['phone']) ? $data['phone'] : null;
+$person->whatsapp = isset($data['whatsapp']) ? $data['whatsapp'] : null;
 
-if ($query) {
-    $rows = mysqli_num_rows($query);
-
-    if ($rows > 0) {
-
-        $people_array = array();
-        $people_array["rows"] = array();
-
-        while ($row = mysqli_fetch_array($query)) {
-
-            // extract facilitates vars calling: $row['name'] -> $name
-            extract($row);
-
-            $people_item = array(
-                "id" => $id,
-                "first_name" => $first_name,
-                "last_name" => $last_name,
-                "email" => $email,
-                "phone" => $phone,
-                "whatsapp" => $whatsapp
-            );
-
-            array_push($people_array["rows"], $people_item);
-        }
-
-        echo json_encode($people_array, JSON_PRETTY_PRINT);
-    } else {
-        echo json_encode(
-            array("message" => "No contacts found."),
-            JSON_PRETTY_PRINT
-        );
-    }
-}
-else{
-    echo json_encode(
-        array("message" => "No contacts found."),
-        JSON_PRETTY_PRINT
-    );
-}
+$json = $person->get_person();
+echo $json;
